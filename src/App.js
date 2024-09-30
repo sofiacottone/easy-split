@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import FriendsList from "./components/FriendsList";
 import FormAddFriend from "./components/FormAddFriend";
 import Button from "./components/Button";
-import FormSplitBill from "./components/FormSplitBill";
 
 export default function App() {
   const [showAddFriend, setShowAddFriend] = useState(false);
@@ -17,6 +16,7 @@ export default function App() {
   // open form to add friends
   function handleShowAddFriend() {
     setShowAddFriend((show) => !show);
+    setSelectedFriend(null);
   }
 
   // add new friend to the friends list
@@ -60,7 +60,7 @@ export default function App() {
   }
 
   return (
-    <div className="App max-w-md shadow rounded m-auto">
+    <div className="App max-w-md shadow rounded m-auto bg-slate-50/50">
       <header className="pt-8">
         <h1 className="text-3xl text-center font-bold">EasySplit</h1>
         <p className="mb-2 text-slate-600 text-center">Split bills with your friends</p>
@@ -69,30 +69,34 @@ export default function App() {
       <main className="px-4 overflow-y-auto h-[calc(100vh-118px)]">
         <div className="w-full">
 
-          {friends.length === 0 ? (
-            <p className="my-8 text-center font-semibold">Add friends to start splitting bills!👇</p>
-          ) :
-            < FriendsList
-              friends={friends}
-              onSelection={handleSelection}
-              selectedFriend={selectedFriend}
-              onRemoveFriend={handleRemoveFriend}
-            />}
+          {friends.length === 0 &&
+            <p className="my-6 text-center font-semibold">Add friends to start splitting bills!👇</p>
+          }
 
-          {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
-
-          <div className="my-2 w-full flex justify-end">
+          <div className="mb-4 w-full flex justify-end">
             <Button onClick={handleShowAddFriend}>
               {showAddFriend ? 'Close' : 'Add Friend'}
             </Button>
           </div>
 
+          {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
+
+          {friends.length > 0 &&
+            < FriendsList
+              friends={friends}
+              onSelection={handleSelection}
+              selectedFriend={selectedFriend}
+              onRemoveFriend={handleRemoveFriend}
+              onSplitBill={handleSplitBill}
+            />
+          }
+
         </div>
-        {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} onSplitBill={handleSplitBill} />}
+
       </main>
 
       <footer>
-        <p className="px-2 py-px text-xs text-end text-white bg-cyan-600">
+        <p className="px-2 py-px text-xs text-end text-white bg-cyan-600 rounded-t">
           Made with &#9829; by <a href="https://github.com/sofiacottone" target="__blank">Sofia C.</a>
         </p>
       </footer>

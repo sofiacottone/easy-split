@@ -15,7 +15,7 @@ export default function FormAddFriend({ onAddFriend }) {
             name,
             balance: 0,
         };
-        console.log(newFriend);
+        // console.log(newFriend);
 
         onAddFriend(newFriend);
 
@@ -32,6 +32,7 @@ export default function FormAddFriend({ onAddFriend }) {
                     onChange={(e) =>
                         setName(e.target.value)
                     }
+                    maxLength={15}
                     className="rounded h-8 text-center"
                 />
             </div>

@@ -1,6 +1,6 @@
 import Friend from "./Friend";
 
-export default function FriendsList({ friends, onSelection, selectedFriend, onRemoveFriend }) {
+export default function FriendsList({ friends, onSelection, selectedFriend, onRemoveFriend, onSplitBill }) {
 
     return <>
         <ul className="py-3">
@@ -11,6 +11,7 @@ export default function FriendsList({ friends, onSelection, selectedFriend, onRe
                     onSelection={onSelection}
                     selectedFriend={selectedFriend}
                     onRemoveFriend={onRemoveFriend}
+                    onSplitBill={onSplitBill}
                 />
             ))}
         </ul>

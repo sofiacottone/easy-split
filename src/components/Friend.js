@@ -1,7 +1,8 @@
 import Avatar from "./Avatar";
 import Button from "./Button";
+import FormSplitBill from "./FormSplitBill";
 
-export default function Friend({ friend, onSelection, selectedFriend, onRemoveFriend }) {
+export default function Friend({ friend, onSelection, selectedFriend, onRemoveFriend, onSplitBill }) {
     const isSelected = selectedFriend?.id === friend.id;
 
     return <>
@@ -30,10 +31,26 @@ export default function Friend({ friend, onSelection, selectedFriend, onRemoveFr
             </div>
 
             <div className="flex gap-1">
-                <Button onClick={() => onSelection(friend)}>{isSelected ? 'Close' : 'Select'}</Button>
-                {!isSelected && <button onClick={() => onRemoveFriend(friend.id)} className="px-2 py-1 text-white bg-red-600 rounded">X</button>}
+                <Button
+                    onClick={() =>
+                        onSelection(friend)
+                    }
+                >
+                    {isSelected ? 'Close' : 'Select'}
+                </Button>
+
+                {!isSelected &&
+                    <button
+                        onClick={() => onRemoveFriend(friend.id)}
+                        className="px-2 py-1 text-white bg-red-600 rounded"
+                    >
+                        &#88;
+                    </button>
+                }
             </div>
 
         </li>
+        {isSelected && <FormSplitBill selectedFriend={selectedFriend} onSplitBill={onSplitBill} />}
+
     </>
 }
