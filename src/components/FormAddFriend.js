@@ -1,11 +1,39 @@
+import { useState } from "react"
 import Button from "./Button"
 
-export default function FormAddFriend() {
+export default function FormAddFriend({ onAddFriend }) {
+    const [name, setName] = useState('');
+
+    function handleSumbit(e) {
+        e.preventDefault();
+
+        if (!name || name.trim() === '') return;
+
+        const id = crypto.randomUUID();
+        const newFriend = {
+            id,
+            name,
+            balance: 0,
+        };
+        console.log(newFriend);
+
+        onAddFriend(newFriend);
+
+        setName('');
+    }
+
     return <>
-        <form className="p-4 flex flex-col items-center md:items-start justify-center gap-3 bg-cyan-100 rounded">
-            <div className="flex items-center justify-between gap-2 size-full max-w-96">
+        <form onSubmit={handleSumbit} className="p-4 flex flex-col items-center justify-center gap-3 bg-cyan-100 rounded">
+            <div className="flex items-center justify-between gap-2 size-full">
                 <label className="font-semibold">Friend name</label>
-                <input type="text" className="rounded h-8" />
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) =>
+                        setName(e.target.value)
+                    }
+                    className="rounded h-8 text-center"
+                />
             </div>
             <Button>Add</Button>
         </form>

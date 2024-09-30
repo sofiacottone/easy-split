@@ -1,9 +1,11 @@
 import Avatar from "./Avatar";
 import Button from "./Button";
 
-export default function Friend({ friend }) {
+export default function Friend({ friend, onSelection, selectedFriend, onRemoveFriend }) {
+    const isSelected = selectedFriend?.id === friend.id;
+
     return <>
-        <li className="mb-1 px-2 py-1 flex items-center justify-between gap-4 rounded hover:bg-cyan-100">
+        <li className={`${isSelected ? 'bg-cyan-100' : ''} mb-1 px-2 py-1 flex items-center justify-between gap-4 rounded hover:bg-cyan-100`}>
             <div className="flex items-center gap-4 w-4/5">
                 <Avatar seed={friend.name} alt={friend.name} />
                 <div>
@@ -27,7 +29,11 @@ export default function Friend({ friend }) {
                 </div>
             </div>
 
-            <Button>Select</Button>
+            <div className="flex gap-1">
+                <Button onClick={() => onSelection(friend)}>{isSelected ? 'Close' : 'Select'}</Button>
+                {!isSelected && <button onClick={() => onRemoveFriend(friend.id)} className="px-2 py-1 text-white bg-red-600 rounded">X</button>}
+            </div>
+
         </li>
     </>
 }
